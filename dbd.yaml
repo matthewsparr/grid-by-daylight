@@ -1,0 +1,487 @@
+Version: "0.1"
+Environment:
+  Name: Dead by Daylight
+  Description: Robots start randomly as "tagged" or not, robots can "tag" other robots. Any robot that is "tagged" 3 times dies.
+  Observers:
+    Block2D:
+      TileSize: 24
+    Sprite2D:
+      TileSize: 24
+      BackgroundTile: oryx/oryx_fantasy/floor1-1.png
+    Isometric:
+      TileSize: [ 64, 64 ]
+      BackgroundTile: stratega/plain.png
+      IsoTileHeight: 35
+      IsoTileDepth: 0
+    Vector:
+      IncludePlayerId: true
+      IncludeVariables: true
+  Variables:
+    - Name: downed_survivors
+      InitialValue: 0
+    - Name: initial_generator_count
+      InitialValue: 0
+    - Name: repaired_generator_count
+      InitialValue: 0
+    - Name: exit_gate_opened
+      InitialValue: 0
+    - Name: escaped_survivors_count
+      InitialValue: 0
+  Player:
+    Count: 5
+    Observer:
+      RotateWithAvatar: true
+      TrackAvatar: true
+      Height: 9
+      Width: 9
+      OffsetX: 0
+      OffsetY: 0
+    AvatarObject: player
+  Termination:
+    Win:
+      - Conditions:
+          - eq: [ escaped_survivors_count, 4 ]
+        Reward: 10 # -10 for a loss
+        OpposingReward: -10 # as the agent didnt lose
+    Lose:
+      - Conditions:
+          - eq: [ downed_survivors, 4 ] ## all survivors
+        Reward: -10 # -10 for a loss
+        OpposingReward: 10 # as the agent didnt lose
+  Levels:
+    - |
+      W   W   W   W   W   W
+      W   p1  .   .   p2  W
+      W   .   .   .   .   W
+      W   .   .   .   .   W
+      W   p4  .   .   p3  W
+      W   W   W   W   W   W
+    - |
+      W   W   W   W   W  W  W
+      W   p1  .   .   .  p2 W
+      W   .   .   .   .  .  W
+      W   .   .   g   .  .  W
+      W   p4  .   .   .  p3 W
+      W   W   W   W   W  W  W
+    - |
+      W   W   W   W   e   W   W   W   W
+      W   .   .   .   p1  .   .   .   W
+      W   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   W
+      W   p2  .   .   .   .   .   p5  W
+      W   .   .   .   g   .   .   .   W
+      W   .   .   .   .   .   .   .   W
+      W   p3  .   .   .   .   .   p4  W
+      W   W   W   W   W   W   W   W   W
+    - |
+      W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   p1  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   p2  .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   W   W   W   W   W   W   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   W   W   W   W   W   W   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   p3  .   .   .   .   .   .   .   .   .   .   .   .   .   .   p4  .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W
+    - |
+      W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W
+      W   .   .   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   .   .   W
+      W   .   .   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   .   .   W
+      W   .   .   p1  .   m   .   .   .   .   .   .   .   .   .   .   m   .   p2  .   .   W
+      W   .   .   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   .   .   W
+      W   .   .   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   .   .   W
+      W   m   m   m   m   m   .   .   W   W   W   W   W   W   .   .   m   m   m   m   m   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   m   m   m   m   m   .   .   W   W   W   W   W   W   .   .   m   m   m   m   m   W
+      W   .   .   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   .   .   W
+      W   .   .   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   .   .   W
+      W   .   .   p3  .   m   .   .   .   .   .   .   .   .   .   .   m   .   p4  .   .   W
+      W   .   .   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   .   .   W
+      W   .   .   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   .   .   W
+      W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W
+    - |
+      W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W
+      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
+      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
+      W   .   .   p1  .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   p2  .   .   W
+      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
+      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
+      W   m   m   m   m   m   .   .   .   .   .   m   .   .   m   .   .   W   W   W   W   W   W   .   .   m   .   .   m   .   .   .   .   .   m   m   m   m   m   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   W   .   .   .   .   .   .   W   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   W   .   .   .   .   .   .   W   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   W   .   .   .   .   .   .   W   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   W   .   .   .   .   .   .   W   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
+      W   m   m   m   m   m   .   .   .   .   .   m   .   .   m   .   .   W   W   W   W   W   W   .   .   m   .   .   m   .   .   .   .   .   m   m   m   m   m   W
+      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
+      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
+      W   .   .   p3  .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   p4  .   .   W
+      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
+      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
+      W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W
+
+
+Actions:
+
+  # players have a random chance of starting in a tagged state
+  - Name: initialize_killer
+    Behaviours:
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src._playerId, 1 ]
+          Commands:
+            - set_tile: 1
+            - set: [ is_killer, 1 ]
+        Dst:
+          Object: player
+
+  - Name: attack
+    Behaviours:
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src.is_killer, 1 ]
+            - gt: [ dst.health, 0 ]
+          Commands:
+            - reward: 1
+        Dst:
+          Object: player
+          Commands:
+            - set_tile: 2
+            - decr: health
+            - reward: -1
+            - eq:
+                Arguments: [ health, 0 ]
+                Commands:
+                  - set_tile: 3
+                  - incr: downed_survivors
+                  - set: [ downed, 1 ]
+                  - reward: -5
+  - Name: heal
+    Behaviours:
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src.is_killer, 0 ]
+            - eq: [ src.downed, 0 ]
+            - eq: [ dst.is_killer, 0 ]
+            - lt: [ dst.health, 2 ]
+          Commands:
+            - reward: 0.25
+        Dst:
+          Object: player
+          Commands:
+            - eq:
+                Arguments: [ health, 1 ]
+                Commands:
+                  - set_tile: 0
+                  - incr: health
+            - eq:
+                Arguments: [ health, 0 ]
+                Commands:
+                  - set_tile: 2
+                  - set: [ downed, 0 ]
+                  - incr: health
+                  - decr: downed_survivors
+
+  - Name: move
+    Behaviours:
+      - Src:
+          Object: [ player, moveable_wall ]
+          Preconditions:
+            - eq: [ src.downed, 0 ]
+          Commands:
+            - mov: _dest
+      - Src:
+          Object: player
+          Commands:
+            - mov: _dest
+        Dst:
+          Object: moveable_wall
+          Commands:
+            - cascade: _dest
+
+  - Name: repair_generator
+    Behaviours:
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src.is_killer, 0 ]
+            - eq: [ src.downed, 0 ]
+            - eq: [ dst.is_repaired, 0 ]
+          Commands:
+            - reward: 0.05
+        Dst:
+          Object: generator
+          Commands:
+            - add: [ progress, 5 ]
+            - set: [ is_damaged, 0 ]
+            - gte:
+                Arguments: [ progress, 100 ]
+                Commands:
+                  - set: [ is_repaired, 1 ]
+                  - set_tile: 1
+                  - incr: repaired_generator_count
+
+
+  - Name: damage_generator
+    Behaviours:
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src.is_killer, 1 ]
+            - eq: [ dst.is_repaired, 0 ]
+            - eq: [ dst.is_damaged, 0 ]
+            - gt: [ dst.progress, 0 ]
+          Commands:
+            - reward: 0.25
+        Dst:
+          Object: generator
+          Commands:
+            - sub: [ progress, 10 ]
+            - set: [ is_damaged, 1 ]
+
+  - Name: regress_generator
+    InputMapping:
+      Internal: true
+      Inputs:
+        1:
+          Description: "Slowly reduce progress on generator when not being repaired"
+    Behaviours:
+      - Src:
+          Object: generator
+          Preconditions:
+            - eq: [ src.is_repaired, 0 ]
+            - eq: [ src.is_damaged, 1 ]
+            - gte: [ src.progress, 1 ]
+          Commands:
+            - sub: [ progress, 1 ]
+            - exec:
+                Action: regress_generator
+                ActionId: 1
+                Delay: 10
+        Dst:
+          Object: generator
+
+  - Name: count_generators
+    InputMapping:
+      Internal: true
+      Inputs:
+        1:
+          Description: "Count the total number of generators"
+    Behaviours:
+      - Src:
+          Object: generator
+          Commands:
+            - incr: initial_generator_count
+        Dst:
+          Object: generator
+
+  - Name: open_exit_gate
+    Behaviours:
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src.is_killer, 0 ]
+            - eq: [ dst.is_open, 0 ]
+            - eq: [ dst.is_powered, 1 ]
+          Commands:
+            - reward: 0.5
+        Dst:
+          Object: exit_gate
+          Commands:
+            - add: [ progress, 5 ]
+            - eq:
+                Arguments: [ progress, 100 ]
+                Commands:
+                  - set: [ is_open, 1 ]
+                  - set_tile: 2
+                  - set: [ exit_gate_opened, 1 ]
+
+  - Name: exit
+    Behaviours:
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src.is_killer, 0 ]
+            - eq: [ dst.is_open, 1 ]
+          Commands:
+            - set: [ src.is_escaped, 1 ]
+            - incr: escaped_survivors_count
+            - reward: 5
+        Dst:
+          Object: exit_gate
+
+Objects:
+  - Name: player
+    MapCharacter: p
+    InitialActions:
+      - Action: initialize_killer
+    Variables:
+      - Name: is_killer
+        InitialValue: 0
+      - Name: health
+        InitialValue: 2
+      - Name: downed
+        InitialValue: 0
+      - Name: is_escaped
+        InitialValue: 0
+    Observers:
+      Sprite2D:
+        - Image: gvgai/newset/girl1.png
+        - Image: gvgai/oryx/butcher1.png
+        - Image: gvgai/newset/girl5.png
+        - Image: gvgai/newset/girl_downed.png
+      Block2D:
+        - Shape: triangle
+          Color: [ 0.9, 0.5, 0.5 ]
+          Scale: 1.0
+        - Shape: triangle
+          Color: [ 0.2, 0.2, 0.9 ]
+          Scale: 0.5
+        - Shape: triangle
+          Color: [ 0.9, 0.2, 0.2 ]
+          Scale: 1.0
+        - Shape: triangle
+          Color: [ 0.9, 0.0, 0.0 ]
+          Scale: 1.0
+      Isometric:
+        - Image: gvgai/newset/girl1.png
+        - Image: gvgai/oryx/butcher1.png
+        - Image: gvgai/newset/girl5.png
+        - Image: gvgai/newset/girl_downed.png
+
+  - Name: generator
+    MapCharacter: g
+    InitialActions:
+      - Action: count_generators
+        ActionId: 1
+      - Action: regress_generator
+        ActionId: 1
+#        Delay: 10
+    Variables:
+      - Name: progress
+        InitialValue: 50
+      - Name: is_repaired
+        InitialValue: 0
+      - Name: is_damaged
+        InitialValue: 1
+        Delay: 10
+    Observers:
+      Sprite2D:
+        - Image: gvgai/newset/submarine.png
+        - Image: gvgai/newset/submarine_repaired.png
+      Block2D:
+        - Color: [ 0.9, 0.75, 0.9 ]
+          Shape: square
+      Isometric:
+        - Image: gvgai/newset/submarine.png
+        - Image: gvgai/newset/submarine_repaired.png
+
+  - Name: exit_gate
+    MapCharacter: e
+    Variables:
+      - Name: progress
+        InitialValue: 0
+      - Name: is_open
+        InitialValue: 0
+      - Name: is_powered
+        InitialValue: 0
+    Observers:
+      Sprite2D:
+        - Image: gvgai/newset/jaildoor1.png
+        - Image: gvgai/newset/lock2.png
+        - Image: gvgai/newset/exit.png
+      Block2D:
+        - Color: [ 0.1, 0.1, 0.8 ]
+          Shape: square
+      Isometric:
+        - Image: stratega/hole.png
+
+  - Name: moveable_wall
+    MapCharacter: m
+    Observers:
+      Sprite2D:
+        - Image: oryx/oryx_fantasy/wall4-0.png
+      Block2D:
+        - Color: [ 0.8, 0.8, 0.8 ]
+          Shape: square
+      Isometric:
+        - Image: oryx/oryx_fantasy/wall4-0.png
+
+  - Name: fixed_wall
+    MapCharacter: W
+    Observers:
+      Sprite2D:
+        - TilingMode: WALL_16
+          Image:
+            - oryx/oryx_fantasy/wall2-0.png
+            - oryx/oryx_fantasy/wall2-1.png
+            - oryx/oryx_fantasy/wall2-2.png
+            - oryx/oryx_fantasy/wall2-3.png
+            - oryx/oryx_fantasy/wall2-4.png
+            - oryx/oryx_fantasy/wall2-5.png
+            - oryx/oryx_fantasy/wall2-6.png
+            - oryx/oryx_fantasy/wall2-7.png
+            - oryx/oryx_fantasy/wall2-8.png
+            - oryx/oryx_fantasy/wall2-9.png
+            - oryx/oryx_fantasy/wall2-10.png
+            - oryx/oryx_fantasy/wall2-11.png
+            - oryx/oryx_fantasy/wall2-12.png
+            - oryx/oryx_fantasy/wall2-13.png
+            - oryx/oryx_fantasy/wall2-14.png
+            - oryx/oryx_fantasy/wall2-15.png
+      Block2D:
+        - Color: [ 0.5, 0.5, 0.5 ]
+          Shape: square
+      Isometric:
+        - Image: stratega/plain.png
