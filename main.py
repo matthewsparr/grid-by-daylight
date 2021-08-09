@@ -14,7 +14,7 @@ from tqdm import tqdm
 
 wrapper = GymWrapperFactory()
 
-wrapper.build_gym_from_yaml('dbd', 'dbd.yaml', level=2)
+wrapper.build_gym_from_yaml('dbd', 'dbd.yaml', level=1)
 # Press the green button in the gutter to run the script.
 
 def random_direction():
@@ -22,15 +22,16 @@ def random_direction():
 def random_action(actions):
     return (np.random.choice(actions))
 
-killer_actions = [1,3,5]
-survivor_actions = [2,3,4]
+killer_actions = [1,2,4,6]
+survivor_actions = [3,4,5,7,8]
 if __name__ == '__main__':
     env = gym.make('GDY-dbd-v0', global_observer_type=gd.ObserverType.SPRITE_2D) #  ISOMETRIC
     env.enable_history(True)
     env.reset()
     env.render(observer='global')
+    print(env.action_space)
 
-    time.sleep(1)
+    # time.sleep(1)
     # play(env, fps=30, zoom=3)
     # Replace with your own control algorithm!
     generator_progress_bar = tqdm(total=100, leave=True, desc = 'generators', position=0)
@@ -61,6 +62,9 @@ if __name__ == '__main__':
             downed_survivor_progress_bar.n = downed_survivors
             downed_survivor_progress_bar.refresh()
 
+        exit_gate_progress = [i['Variables']['progress'] for i in state['Objects'] if i['Name']=='exit_gate'][0]
+        if exit_gate_progress > 0:
+            print(exit_gate_progress)
         env.render(observer='global') # Renders the entire environment
 
         if done:

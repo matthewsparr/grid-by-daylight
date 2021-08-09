@@ -23,6 +23,8 @@ Environment:
       InitialValue: 0
     - Name: repaired_generator_count
       InitialValue: 0
+    - Name: generators_repaired
+      InitialValue: 0
     - Name: exit_gate_opened
       InitialValue: 0
     - Name: escaped_survivors_count
@@ -57,11 +59,11 @@ Environment:
       W   p4  .   .   p3  W
       W   W   W   W   W   W
     - |
-      W   W   W   W   W  W  W
+      W   W   W   e   W  W  W
       W   p1  .   .   .  p2 W
       W   .   .   .   .  .  W
       W   .   .   g   .  .  W
-      W   p4  .   .   .  p3 W
+      W   p4  .   p5  .  p3 W
       W   W   W   W   W  W  W
     - |
       W   W   W   W   e   W   W   W   W
@@ -120,54 +122,6 @@ Environment:
       W   .   .   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   .   .   W
       W   .   .   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   .   .   W
       W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W
-    - |
-      W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W
-      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
-      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
-      W   .   .   p1  .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   p2  .   .   W
-      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
-      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
-      W   m   m   m   m   m   .   .   .   .   .   m   .   .   m   .   .   W   W   W   W   W   W   .   .   m   .   .   m   .   .   .   .   .   m   m   m   m   m   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   W   .   .   .   .   .   .   W   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   W   .   .   .   .   .   .   W   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   W   .   .   .   .   .   .   W   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   W   .   .   .   .   .   .   W   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   W
-      W   m   m   m   m   m   .   .   .   .   .   m   .   .   m   .   .   W   W   W   W   W   W   .   .   m   .   .   m   .   .   .   .   .   m   m   m   m   m   W
-      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
-      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
-      W   .   .   p3  .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   p4  .   .   W
-      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
-      W   .   .   .   .   m   .   .   .   .   .   m   .   .   m   .   .   .   .   .   .   .   .   .   .   m   .   .   m   .   .   .   .   .   m   .   .   .   .   W
-      W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W
-
 
 Actions:
 
@@ -191,8 +145,10 @@ Actions:
           Preconditions:
             - eq: [ src.is_killer, 1 ]
             - gt: [ dst.health, 0 ]
+            - eq: [ src.cooldown, 0 ]
           Commands:
             - reward: 1
+            - set: [ src.cooldown, 1 ]
         Dst:
           Object: player
           Commands:
@@ -206,6 +162,18 @@ Actions:
                   - incr: downed_survivors
                   - set: [ downed, 1 ]
                   - reward: -5
+  - Name: recharge
+    Behaviours:
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src.is_killer, 1 ]
+            - gt: [ src.cooldown, 0 ]
+          Commands:
+            - decr: src.cooldown
+        Dst:
+          Object: player
+
   - Name: heal
     Behaviours:
       - Src:
@@ -239,6 +207,7 @@ Actions:
           Object: [ player, moveable_wall ]
           Preconditions:
             - eq: [ src.downed, 0 ]
+            - eq: [ src.cooldown, 0 ]
           Commands:
             - mov: _dest
       - Src:
@@ -263,7 +232,7 @@ Actions:
         Dst:
           Object: generator
           Commands:
-            - add: [ progress, 5 ]
+            - add: [ progress, 25 ]
             - set: [ is_damaged, 0 ]
             - gte:
                 Arguments: [ progress, 100 ]
@@ -271,7 +240,10 @@ Actions:
                   - set: [ is_repaired, 1 ]
                   - set_tile: 1
                   - incr: repaired_generator_count
-
+            - eq:
+                Arguments: [ repaired_generator_count, initial_generator_count ]
+                Commands:
+                  - set: [ generators_repaired, 1 ]
 
   - Name: damage_generator
     Behaviours:
@@ -290,6 +262,42 @@ Actions:
             - sub: [ progress, 10 ]
             - set: [ is_damaged, 1 ]
 
+  - Name: open_exit_gate
+    Behaviours:
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src.is_killer, 0 ]
+            - eq: [ dst.is_open, 0 ]
+            - eq: [ dst.is_powered, 1 ]
+          Commands:
+            - reward: 0.5
+        Dst:
+          Object: exit_gate
+          Commands:
+            - add: [ progress, 25 ]
+            - gte:
+                Arguments: [ progress, 100 ]
+                Commands:
+                  - set_tile: 2
+                  - set: [ is_open, 1 ]
+                  - set: [ exit_gate_opened, 1 ]
+
+  - Name: exit
+    Behaviours:
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src.is_killer, 0 ]
+            - eq: [ dst.is_open, 1 ]
+          Commands:
+            - set: [ src.is_escaped, 1 ]
+            - incr: escaped_survivors_count
+            - reward: 5
+            - remove: true
+
+        Dst:
+          Object: exit_gate
   - Name: regress_generator
     InputMapping:
       Internal: true
@@ -308,7 +316,7 @@ Actions:
             - exec:
                 Action: regress_generator
                 ActionId: 1
-                Delay: 10
+                Delay: 1
         Dst:
           Object: generator
 
@@ -326,38 +334,27 @@ Actions:
         Dst:
           Object: generator
 
-  - Name: open_exit_gate
+  - Name: check_generator_progress
+    InputMapping:
+      Internal: true
+      Inputs:
+        1:
+          Description: "Check if all generators completed so that exit gate can be powered."
     Behaviours:
       - Src:
-          Object: player
-          Preconditions:
-            - eq: [ src.is_killer, 0 ]
-            - eq: [ dst.is_open, 0 ]
-            - eq: [ dst.is_powered, 1 ]
-          Commands:
-            - reward: 0.5
-        Dst:
           Object: exit_gate
-          Commands:
-            - add: [ progress, 5 ]
-            - eq:
-                Arguments: [ progress, 100 ]
-                Commands:
-                  - set: [ is_open, 1 ]
-                  - set_tile: 2
-                  - set: [ exit_gate_opened, 1 ]
-
-  - Name: exit
-    Behaviours:
-      - Src:
-          Object: player
           Preconditions:
-            - eq: [ src.is_killer, 0 ]
-            - eq: [ dst.is_open, 1 ]
+            - eq: [ src.is_powered, 0 ]
           Commands:
-            - set: [ src.is_escaped, 1 ]
-            - incr: escaped_survivors_count
-            - reward: 5
+            - eq:
+                Arguments: [ generators_repaired, 1 ]
+                Commands:
+                  - set_tile: 1
+                  - set: [ dst.is_powered, 1 ]
+            - exec:
+                Action: check_generator_progress
+                ActionId: 1
+                Delay: 1
         Dst:
           Object: exit_gate
 
@@ -368,6 +365,8 @@ Objects:
       - Action: initialize_killer
     Variables:
       - Name: is_killer
+        InitialValue: 0
+      - Name: cooldown
         InitialValue: 0
       - Name: health
         InitialValue: 2
@@ -407,15 +406,14 @@ Objects:
         ActionId: 1
       - Action: regress_generator
         ActionId: 1
-#        Delay: 10
+        Delay: 1
     Variables:
       - Name: progress
-        InitialValue: 50
+        InitialValue: 0
       - Name: is_repaired
         InitialValue: 0
       - Name: is_damaged
-        InitialValue: 1
-        Delay: 10
+        InitialValue: 0
     Observers:
       Sprite2D:
         - Image: gvgai/newset/submarine.png
@@ -429,6 +427,10 @@ Objects:
 
   - Name: exit_gate
     MapCharacter: e
+    InitialActions:
+      - Action: check_generator_progress
+        ActionId: 1
+        Delay: 1
     Variables:
       - Name: progress
         InitialValue: 0
@@ -445,7 +447,9 @@ Objects:
         - Color: [ 0.1, 0.1, 0.8 ]
           Shape: square
       Isometric:
-        - Image: stratega/hole.png
+        - Image: gvgai/newset/jaildoor1.png
+        - Image: gvgai/newset/lock2.png
+        - Image: gvgai/newset/exit.png
 
   - Name: moveable_wall
     MapCharacter: m
