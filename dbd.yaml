@@ -4,18 +4,19 @@ Environment:
   Description: Robots start randomly as "tagged" or not, robots can "tag" other robots. Any robot that is "tagged" 3 times dies.
   Observers:
     Block2D:
-      TileSize: 24
+      TileSize: 36
     Sprite2D:
-      TileSize: 24
-      BackgroundTile: oryx/oryx_fantasy/floor1-1.png
+      TileSize: 36
+      BackgroundTile: floor1-1.png
     Isometric:
       TileSize: [ 64, 64 ]
-      BackgroundTile: stratega/plain.png
+      BackgroundTile: plain.png
       IsoTileHeight: 35
       IsoTileDepth: 0
     Vector:
       IncludePlayerId: true
       IncludeVariables: true
+      IncludeRotation: true
   Variables:
     - Name: downed_survivors
       InitialValue: 0
@@ -29,13 +30,15 @@ Environment:
       InitialValue: 0
     - Name: escaped_survivors_count
       InitialValue: 0
+    - Name: survivors_left
+      InitialValue: 4
   Player:
     Count: 5
     Observer:
       RotateWithAvatar: true
       TrackAvatar: true
-      Height: 9
-      Width: 9
+      Height: 1
+      Width: 10
       OffsetX: 0
       OffsetY: 0
     AvatarObject: player
@@ -47,7 +50,7 @@ Environment:
         OpposingReward: -10 # as the agent didnt lose
     Lose:
       - Conditions:
-          - eq: [ downed_survivors, 4 ] ## all survivors
+          - eq: [ downed_survivors, survivors_left ] ## all survivors
         Reward: -10 # -10 for a loss
         OpposingReward: 10 # as the agent didnt lose
   Levels:
@@ -71,32 +74,32 @@ Environment:
       W   .   .   .   .   .   .   .   W
       W   .   .   .   .   .   .   .   W
       W   .   .   .   .   .   .   .   W
-      W   p2  .   .   .   .   .   p5  W
-      W   .   .   .   g   .   .   .   W
+      W   p2  .   .   g   .   .   p5  W
       W   .   .   .   .   .   .   .   W
+      W   .   g   .   .   .   g   .   W
       W   p3  .   .   .   .   .   p4  W
       W   W   W   W   W   W   W   W   W
     - |
-      W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W
+      W   W   W   W   W   W   W   W   W   W   e   W   W   W   W   W   W   W   W   W   W   W
       W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
-      W   .   p1  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   p2  .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   W   W   W   W   W   W   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
-      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   p1  .   .   .   .   .   .   .   .   .   .   W
+      W   .   p5  .   .   m   .   .   .   .   .   .   .   .   .   m   .   .   p2  .   .   W
       W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
       W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
       W   .   .   .   .   .   .   .   W   W   W   W   W   W   .   .   .   .   .   .   .   W
+      W   .   .   m   .   .   .   .   .   .   .   .   .   .   .   .   .   .   m   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   W   .   .   g   .   .   .   W   .   .   .   .   .   .   W
+      W   .   .   g   .   .   .   W   .   .   .   .   .   .   W   .   .   .   g   .   .   W
+      W   .   .   .   .   .   .   W   .   .   .   .   .   .   W   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   m   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   .   .   W   W   W   W   W   W   .   .   .   .   m   .   .   W
       W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
       W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
       W   .   .   p3  .   .   .   .   .   .   .   .   .   .   .   .   .   .   p4  .   .   W
-      W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
+      W   .   .   .   .   .   g   .   .   .   m   .   .   .   .   g   .   .   .   .   .   W
       W   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   W
       W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W   W
     - |
@@ -125,7 +128,7 @@ Environment:
 
 Actions:
 
-  # players have a random chance of starting in a tagged state
+  # p1 is set as the killer at the start of the game
   - Name: initialize_killer
     Behaviours:
       - Src:
@@ -135,9 +138,96 @@ Actions:
           Commands:
             - set_tile: 1
             - set: [ is_killer, 1 ]
+            - set: [ traps_available, 2 ]
         Dst:
           Object: player
 
+  # both killer and survivor
+  - Name: move
+    InputMapping:
+      Inputs:
+        1:
+          Description: Move left
+          OrientationVector: [ -1, 0 ]
+          VectorToDest: [ -1, 0 ]
+        2:
+          Description: Move up
+          OrientationVector: [ 0, -1 ]
+          VectorToDest: [ 0, -1 ]
+        3:
+          Description: Move right
+          OrientationVector: [ 1, 0 ]
+          VectorToDest: [ 1, 0 ]
+        4:
+          Description: Move down
+          VectorToDest: [ 0, 1 ]
+          OrientationVector: [ 0, -1 ]
+      Relative: false
+    Behaviours:
+#      - Src:
+#          Object: player
+#          Commands:
+#            - rot: _dir
+#        Dst:
+#          Object: player
+
+      - Src:
+          Object: [ player, moveable_wall ]
+          Preconditions:
+            - eq: [ src.downed, 0 ]
+            - eq: [ src.cooldown, 0 ]
+          Commands:
+            - mov: _dest
+        Dst:
+          Object: _empty
+
+      - Src:
+          Object: player
+          Commands:
+            - mov: _dest
+        Dst:
+          Object: moveable_wall
+          Commands:
+            - cascade: _dest
+
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src.is_killer, 0 ]
+          Commands:
+            - eq:
+                Arguments: [ dst.is_armed, 1 ]
+                Commands:
+                  - set_tile: 3
+                  - set: [ health, 0 ]
+                  - incr: downed_survivors
+                  - set: [ downed, 1 ]
+            - mov: _dest
+        Dst:
+          Object: trap
+          Commands:
+            - eq:
+                Arguments: [ is_armed, 1 ]
+                Commands:
+                  - set: [ is_armed, 0 ]
+                  - set_tile: 1
+
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src.is_killer, 0 ]
+            - eq: [ dst.is_open, 1 ]
+          Commands:
+            - set: [ src.is_escaped, 1 ]
+            - incr: escaped_survivors_count
+            - reward: 5
+            - remove: true
+            - decr: survivors_left
+        Dst:
+          Object: exit_gate
+
+  # killer only
+  # the killer attacks a nearby survivor and reduces their health state by one
   - Name: attack
     Behaviours:
       - Src:
@@ -162,6 +252,7 @@ Actions:
                   - incr: downed_survivors
                   - set: [ downed, 1 ]
                   - reward: -5
+  # killer only
   - Name: recharge
     Behaviours:
       - Src:
@@ -174,6 +265,54 @@ Actions:
         Dst:
           Object: player
 
+  # killer only
+  - Name: damage_generator
+    Behaviours:
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src.is_killer, 1 ]
+            - eq: [ dst.is_repaired, 0 ]
+            - eq: [ dst.is_damaged, 0 ]
+            - gt: [ dst.progress, 0 ]
+          Commands:
+            - reward: 0.25
+        Dst:
+          Object: generator
+          Commands:
+            - sub: [ progress, 10 ]
+            - set: [ is_damaged, 1 ]
+
+  # killer only
+  - Name: place_trap
+    Behaviours:
+      - Src:
+          Object: player
+          Preconditions:
+            - eq: [ src.is_killer, 1 ]
+            - gt: [ src.traps_available, 0 ]
+          Commands:
+            - decr: src.traps_available
+            - spawn: trap
+        Dst:
+          Object: _empty
+
+
+  # killer only
+  - Name: pick_up_trap
+    Behaviours:
+      - Src:
+          Object: player
+          Preconditions:
+              - eq: [ src.is_killer, 1 ]
+          Commands:
+            - incr: src.traps_available
+        Dst:
+          Object: trap
+          Commands:
+            - remove: true
+
+  # survivor only
   - Name: heal
     Behaviours:
       - Src:
@@ -201,24 +340,8 @@ Actions:
                   - incr: health
                   - decr: downed_survivors
 
-  - Name: move
-    Behaviours:
-      - Src:
-          Object: [ player, moveable_wall ]
-          Preconditions:
-            - eq: [ src.downed, 0 ]
-            - eq: [ src.cooldown, 0 ]
-          Commands:
-            - mov: _dest
-      - Src:
-          Object: player
-          Commands:
-            - mov: _dest
-        Dst:
-          Object: moveable_wall
-          Commands:
-            - cascade: _dest
 
+  # survivor only
   - Name: repair_generator
     Behaviours:
       - Src:
@@ -245,22 +368,18 @@ Actions:
                 Commands:
                   - set: [ generators_repaired, 1 ]
 
-  - Name: damage_generator
+  - Name: disarm_trap
     Behaviours:
       - Src:
           Object: player
           Preconditions:
-            - eq: [ src.is_killer, 1 ]
-            - eq: [ dst.is_repaired, 0 ]
-            - eq: [ dst.is_damaged, 0 ]
-            - gt: [ dst.progress, 0 ]
-          Commands:
-            - reward: 0.25
+            - eq: [ src.is_killer, 0 ]
+            - eq: [ dst.is_armed, 1 ]
         Dst:
-          Object: generator
+          Object: trap
           Commands:
-            - sub: [ progress, 10 ]
-            - set: [ is_damaged, 1 ]
+            - set: [ is_armed, 0 ]
+            - set_tile: 1
 
   - Name: open_exit_gate
     Behaviours:
@@ -283,21 +402,6 @@ Actions:
                   - set: [ is_open, 1 ]
                   - set: [ exit_gate_opened, 1 ]
 
-  - Name: exit
-    Behaviours:
-      - Src:
-          Object: player
-          Preconditions:
-            - eq: [ src.is_killer, 0 ]
-            - eq: [ dst.is_open, 1 ]
-          Commands:
-            - set: [ src.is_escaped, 1 ]
-            - incr: escaped_survivors_count
-            - reward: 5
-            - remove: true
-
-        Dst:
-          Object: exit_gate
   - Name: regress_generator
     InputMapping:
       Internal: true
@@ -374,12 +478,14 @@ Objects:
         InitialValue: 0
       - Name: is_escaped
         InitialValue: 0
+      - Name: traps_available
+        InitialValue: 0
     Observers:
       Sprite2D:
-        - Image: gvgai/newset/girl1.png
-        - Image: gvgai/oryx/butcher1.png
-        - Image: gvgai/newset/girl5.png
-        - Image: gvgai/newset/girl_downed.png
+        - Image: girl1.png
+        - Image: butcher1.png
+        - Image: girl5.png
+        - Image: girl_downed.png
       Block2D:
         - Shape: triangle
           Color: [ 0.9, 0.5, 0.5 ]
@@ -394,10 +500,10 @@ Objects:
           Color: [ 0.9, 0.0, 0.0 ]
           Scale: 1.0
       Isometric:
-        - Image: gvgai/newset/girl1.png
-        - Image: gvgai/oryx/butcher1.png
-        - Image: gvgai/newset/girl5.png
-        - Image: gvgai/newset/girl_downed.png
+        - Image: girl1.png
+        - Image: butcher1.png
+        - Image: girl5.png
+        - Image: girl_downed.png
 
   - Name: generator
     MapCharacter: g
@@ -416,14 +522,14 @@ Objects:
         InitialValue: 0
     Observers:
       Sprite2D:
-        - Image: gvgai/newset/submarine.png
-        - Image: gvgai/newset/submarine_repaired.png
+        - Image: submarine.png
+        - Image: submarine_repaired.png
       Block2D:
         - Color: [ 0.9, 0.75, 0.9 ]
           Shape: square
       Isometric:
-        - Image: gvgai/newset/submarine.png
-        - Image: gvgai/newset/submarine_repaired.png
+        - Image: submarine.png
+        - Image: submarine_repaired.png
 
   - Name: exit_gate
     MapCharacter: e
@@ -440,27 +546,53 @@ Objects:
         InitialValue: 0
     Observers:
       Sprite2D:
-        - Image: gvgai/newset/jaildoor1.png
-        - Image: gvgai/newset/lock2.png
-        - Image: gvgai/newset/exit.png
+        - Image: jaildoor1.png
+        - Image: doorclosed1.png
+        - Image: dooropen1.png
       Block2D:
         - Color: [ 0.1, 0.1, 0.8 ]
           Shape: square
       Isometric:
-        - Image: gvgai/newset/jaildoor1.png
-        - Image: gvgai/newset/lock2.png
-        - Image: gvgai/newset/exit.png
+        - Image: jaildoor1.png
+        - Image: doorclosed1.png
+        - Image: dooropen1.png
+
+  - Name: trap
+    Z: 2
+    MapCharacter: x
+    Variables:
+      - Name: is_armed
+        InitialValue: 1
+      - Name: survivor_caught
+        InitialValue: 0
+
+    Observers:
+      Sprite2D:
+        - Image: bear_trap_armed.png
+        - Image: bear_trap_disarmed.png
+      Block2D:
+        - Color: [ 0.8, 0.8, 0.8 ]
+          Shape: circle
+      Isometric:
+        - Image: bear_trap_armed.png
+        - Image: bear_trap_disarmed.png
 
   - Name: moveable_wall
     MapCharacter: m
+    Variables:
+      - Name: downed
+        InitialValue: 0
+      - Name: cooldown
+        InitialValue: 0
     Observers:
       Sprite2D:
-        - Image: oryx/oryx_fantasy/wall4-0.png
+        - Image: wall4-0.png
       Block2D:
         - Color: [ 0.8, 0.8, 0.8 ]
           Shape: square
       Isometric:
-        - Image: oryx/oryx_fantasy/wall4-0.png
+        - Image: wall4-0.png
+
 
   - Name: fixed_wall
     MapCharacter: W
@@ -468,24 +600,24 @@ Objects:
       Sprite2D:
         - TilingMode: WALL_16
           Image:
-            - oryx/oryx_fantasy/wall2-0.png
-            - oryx/oryx_fantasy/wall2-1.png
-            - oryx/oryx_fantasy/wall2-2.png
-            - oryx/oryx_fantasy/wall2-3.png
-            - oryx/oryx_fantasy/wall2-4.png
-            - oryx/oryx_fantasy/wall2-5.png
-            - oryx/oryx_fantasy/wall2-6.png
-            - oryx/oryx_fantasy/wall2-7.png
-            - oryx/oryx_fantasy/wall2-8.png
-            - oryx/oryx_fantasy/wall2-9.png
-            - oryx/oryx_fantasy/wall2-10.png
-            - oryx/oryx_fantasy/wall2-11.png
-            - oryx/oryx_fantasy/wall2-12.png
-            - oryx/oryx_fantasy/wall2-13.png
-            - oryx/oryx_fantasy/wall2-14.png
-            - oryx/oryx_fantasy/wall2-15.png
+            - wall2-0.png
+            - wall2-1.png
+            - wall2-2.png
+            - wall2-3.png
+            - wall2-4.png
+            - wall2-5.png
+            - wall2-6.png
+            - wall2-7.png
+            - wall2-8.png
+            - wall2-9.png
+            - wall2-10.png
+            - wall2-11.png
+            - wall2-12.png
+            - wall2-13.png
+            - wall2-14.png
+            - wall2-15.png
       Block2D:
         - Color: [ 0.5, 0.5, 0.5 ]
           Shape: square
       Isometric:
-        - Image: stratega/plain.png
+        - Image: plain.png
