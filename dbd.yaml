@@ -12,7 +12,7 @@ Environment:
       TileSize: [ 64, 64 ]
       BackgroundTile: plain.png
       IsoTileHeight: 35
-      IsoTileDepth: 0
+      IsoTileDepth: 2
     Vector:
       IncludePlayerId: true
       IncludeVariables: true
@@ -35,9 +35,9 @@ Environment:
   Player:
     Count: 5
     Observer:
-      RotateWithAvatar: true
+      RotateWithAvatar: false
       TrackAvatar: true
-      Height: 1
+      Height: 10
       Width: 10
       OffsetX: 0
       OffsetY: 0
@@ -161,7 +161,7 @@ Actions:
         4:
           Description: Move down
           VectorToDest: [ 0, 1 ]
-          OrientationVector: [ 0, -1 ]
+          OrientationVector: [ 0, 1 ]
       Relative: false
     Behaviours:
 #      - Src:
@@ -170,7 +170,6 @@ Actions:
 #            - rot: _dir
 #        Dst:
 #          Object: player
-
       - Src:
           Object: [ player, moveable_wall ]
           Preconditions:
@@ -178,6 +177,7 @@ Actions:
             - eq: [ src.cooldown, 0 ]
           Commands:
             - mov: _dest
+#            - rot: _dir
         Dst:
           Object: _empty
 
